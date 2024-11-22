@@ -70,6 +70,10 @@ const player = new Fighter({
     takeHit: {
       imageSrc: '.img/samuraiMack/Take Hit -white silhouette.png',
       framesMax: 4
+    },
+    death: {
+      imageSrc: './img/samuraiMack/Death.png',
+      framesMax: 6
     }
   },
   attackBox: {
@@ -127,6 +131,10 @@ const enemy = new Fighter({
     takeHit: {
       imageSrc: './img/kenji/Take hit.png',
       framesMax: 3
+    },
+    death: {
+      imageSrc: './img/kenji/Death.png',
+      framesMax: 7
     }
   },
   attackBox: {
@@ -142,7 +150,7 @@ const enemy = new Fighter({
 console.log(player)
 
 const keys = {
-  a: {
+  q: {
     pressed: false
   },
   d: {
@@ -217,7 +225,8 @@ function animate() {
       player.framesCurrent === 4
   ) {
     enemy.takeHit()
-    player.isAttacking = false    
+    player.isAttacking = false   
+  
     document.querySelector('#enemyHealth').style.width = enemy.health + '%'
   }
 
@@ -254,38 +263,43 @@ function animate() {
 animate()
 
 window.addEventListener('keydown', (event) => {
-  switch (event.key) {
-    case 'd':
-      keys.d.pressed = true
-      player.lastKey = 'd'
-      break
-    case 'q':
-      keys.a.pressed = true
-      player.lastKey = 'q'
-      break
-    case 'z':
-      player.velocity.y = -20
-      break
-    case ' ':
-      player.attack()
-      break
+    if (!player.dead) {
+      switch (event.key) {
+        case 'd':
+          keys.d.pressed = true
+          player.lastKey = 'd'
+          break
+        case 'q':
+          keys.q.pressed = true
+          player.lastKey = 'q'
+          break
+        case 'z':
+          player.velocity.y = -20
+          break
+        case ' ':
+          player.attack()
+          break
+      }
+    }
 
-    case 'ArrowRight':
-      keys.ArrowRight.pressed = true
-      enemy.lastKey = 'ArrowRight'
-      break
-    case 'ArrowLeft':
-      keys.ArrowLeft.pressed = true
-      enemy.lastKey = 'ArrowLeft'
-      break
-    case 'ArrowUp':
-      enemy.velocity.y = -20
-      break
-    case 'ArrowDown':
-      enemy.isAttacking = true
-      enemy.attack()
+    if (!enemy.dead) {
+      switch (event.key) {
+        case 'ArrowRight':
+          keys.ArrowRight.pressed = true
+          enemy.lastKey = 'ArrowRight'
+          break
+        case 'ArrowLeft':
+          keys.ArrowLeft.pressed = true
+          enemy.lastKey = 'ArrowLeft'
+          break
+        case 'ArrowUp':
+          enemy.velocity.y = -20
+          break
+        case 'ArrowDown':
+          enemy.attack()
 
       break
+      }
   }
 })
 
