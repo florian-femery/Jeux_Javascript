@@ -150,7 +150,7 @@ const enemy = new Fighter({
 console.log(player)
 
 const keys = {
-  a: {
+  q: {
     pressed: false
   },
   d: {
@@ -182,7 +182,7 @@ function animate() {
 
   // player movement
 
-  if (keys.a.pressed && player.lastKey === 'a') {
+  if (keys.q.pressed && player.lastKey === 'q') {
     player.velocity.x = -5
     player.switchSprite('run')
   } else if (keys.d.pressed && player.lastKey === 'd') {
@@ -276,11 +276,11 @@ window.addEventListener('keydown', (event) => {
         keys.d.pressed = true
         player.lastKey = 'd'
         break
-      case 'a':
-        keys.a.pressed = true
-        player.lastKey = 'a'
+      case 'q':
+        keys.q.pressed = true
+        player.lastKey = 'q'
         break
-      case 'w':
+      case 'z':
         player.velocity.y = -20
         break
       case ' ':
@@ -315,8 +315,8 @@ window.addEventListener('keyup', (event) => {
     case 'd':
       keys.d.pressed = false
       break
-    case 'a':
-      keys.a.pressed = false
+    case 'q':
+      keys.q.pressed = false
       break
   }
 
